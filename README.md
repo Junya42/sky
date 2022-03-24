@@ -1,5 +1,5 @@
 ## Usage
-> make bonus && ./so_long maps/map_of_your_choice.ber
+> make && make bonus && ./so_long maps/map_of_your_choice.ber
 
 #### Guideline
 
@@ -8,7 +8,7 @@
 Parsing de la map
 _________________
 
-Pour parser la map, on fait un gnl du fichier source pour analyser chacune des
+Pour parser la map, on fait un get_next_line du fichier source pour analyser chacune des
 lignes du fichier
 
 On a plusieurs conditions a respecter
