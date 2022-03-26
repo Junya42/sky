@@ -41,35 +41,26 @@ _______________
 
 ##### ETAPE 2
 
-ALLOCATION DES TABLEAUX
+ALLOCATION DU TABLEAU * int
 
 Le premier tableau correspond a la map entiere dans lequel on se deplace avec les axes X et Y
 (malloc a char par ligne * nombre de ligne + 1)
-
-Le deuxieme tableau dans lequel chaque index aura pour valeur la position d'un collectible
-(malloc a variable c + 1)
-
-Idem pour le troisieme tableau mais avec la position des sorties
-(malloc a variable e + 2) -> l'index 0 correspondra a un ON OFF (voir plus bas)
 
 _______________
 
 ###### ETAPE 3
 
-UTILISATION DES TABLEAUX
+UTILISATION DU TABLEAU
 
 Apres chaque input de l'user, on compare la position actuel du personnage avec la position
-de chaque collectible present dans la tableau collectible
+de chaque collectible
 
 Des que l'user se trouve sur la meme position qu'un collectible, la valeur de sa position dans
-le tableau deviens -1 (la position etant possible ca veut dire que le collectible a ete pris)
+le tableau deviens 0 (valeur du sol classique car le collectible a ete ramasse)
 et on incremente une variable (current_collectible)
 
 Lorsque (current_collectible) == (total_collectible) ca veut dire qu'on a tout ramasse, on peut
 donc sortir du niveau.
-
-La valeur de l'index 0 du 3eme tableau devient ON, on commence donc a comparer maintenant la
-position de notre joueur avec celle des differentes sorties, si elles correspondent.
 
 On libere tout l'espace memoire et on quitte le jeu.
 
@@ -79,8 +70,11 @@ _____________
 
 ANIMATION
 
-Un simple int qui va de 0 a 1 000 000 000 et qui une fois a 1 000 000 000 change le sprite,
- l'int se reinitialise a chaque fois, ou toutes les 0.3 sec si on arrive a implementer TIME
+Pour palier aux problemes de performances avec l'utilisation de boucle while pour faire un semblant d'animation
+Je suis passe par la fonction mlx_loop_hook qui tourne en permanence en attendant l'input du joueur.
+Je ne fais qu'incremente un int a chaque appel de la fonction et lorsque cette int atteint certaines valeurs
+specifique, je switch les images affiche a l'ecran avec le sprite suivant. Pour eviter des problemes d'overflows
+je reset la valeur de cette int une fois que j'ai pu parcourir tout mes sprites.
 
 ____________
 
@@ -97,35 +91,29 @@ Ca permet d'avoir un nombre variable d'ennemi et de predefinir leur spawn
 
 COMPORTEMENT ENNEMI
 
-L'ennemi doit toujours se rapprocher de la position du joueur, disons que le joueur
-se situe en X = 1 et Y = 2 (POS = 11) (pour un tableau de 5 sur 5)
+L'ennemi a pour but de foncer sur le joueur afin d'entrer en contact avec lui et de lui faire perdre la partie
 
-Et que l'ennemi se situe x = 3 et Y = 3 (pos = 18) son objectif va etre de se
-rapprocher du joueur, pour se faire il va regarder quel est le moyen le plus rapide
-d'obtenir une position similaire a celle du joueur.
+Son ia a ete code comme ceci.
 
-Dans notre cas avec un tableau de 5 sur 5, modifier x (se deplacer a gauche ou a droite) 
-incremente ou decremente la position de 1, alors que modifier y (monter ou descendre)
-augmente ou diminue la position de 5
+(prenons en compte que tout le jeu se deroule dans un simple tableau d'int)
+Si le joueur se situe en x = 5 et y = 3
+et que l'ia se situe a un bloc en diagonal de celui de notre joueur
 
-L'ennemi devra donc decrementer son axe Y de 1, pour se rapprocher du joueur le plus rapidement possible.
+![solongia](https://user-images.githubusercontent.com/59654989/160253029-3cccef0d-8fda-4e10-9255-da60812cc01a.PNG)
 
-L'ennemi attendra l'input du joueur pour se deplacer, le jeu se deroule en tour par tour ou chaque input represente un tour.
+L'ia se retrouve avec deux choix, se deplacer d'une case sur la droite ou d'une case vers le bas.
+Etant donne que par rapport au tableau, se deplacer d'une case horizontalement correspond a se deplace de + 1 ou - 1
+et que se deplacer a la vertical correspondant a se deplacer de + x ou - x (x correspondant au nombre de case par ligne)
+Il sera donc plus proche du joueur vis a vis du tableau en se deplacant verticalement plutot qu'horizontalement
+meme si visuellement les deux deplacements semble etre egaux.
+
+Elle possede egalement un systeme de pathfinding pour palier au fait que la map puisse egalement comporter des murs.
+
+(PS : la detection du joueur si il se situe en bas a gauche ou en haut a droite de l'ia a ete desactive et remplacer
+par un autre systeme pour eviter que l'ia soit trop puissante. A tester sur la map my.ber)
 
 ______________
 
 ______________
-
-
-1920x1080
-
-1920 / colonne (x) = pixel en largeur pour chaque item
-1080 / lignes (y) = pixel en longueur pour chaque item
-
-Chaque input de deplacement du joueur et de l'ia sera egal a :
-- Cas W = Yplayer -= 1920 / Y 
-- Cas S = Yplayer += 1920 / Y
-- Cas A = Xplayer -= 1080 / X
-- Cas D = Xplayer += 1080 / X
 
 ![scoreSolong](https://user-images.githubusercontent.com/59654989/160252574-f189f762-5cd4-4caf-9d47-7994405488d0.PNG)
