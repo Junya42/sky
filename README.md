@@ -1,6 +1,8 @@
 ## Usage
 > make && make bonus && ./so_long maps/map_of_your_choice.ber
 
+![awake](https://user-images.githubusercontent.com/59654989/160252495-a3ff6cf4-4319-4857-99c8-dbcc48d03624.png)
+
 #### Guideline
 
 ###### ETAPE 1
