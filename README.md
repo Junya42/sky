@@ -8,6 +8,9 @@
 ###### ETAPE 1
 
 Parsing de la map
+
+![solongmap](https://user-images.githubusercontent.com/59654989/160252648-89792a68-a1c8-4ed2-9e86-d338b8b21fc2.PNG)
+
 _________________
 
 Pour parser la map, on fait un get_next_line du fichier source pour analyser chacune des
