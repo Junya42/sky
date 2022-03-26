@@ -124,3 +124,5 @@ Chaque input de deplacement du joueur et de l'ia sera egal a :
 - Cas S = Yplayer += 1920 / Y
 - Cas A = Xplayer -= 1080 / X
 - Cas D = Xplayer += 1080 / X
+
+![scoreSolong](https://user-images.githubusercontent.com/59654989/160252574-f189f762-5cd4-4caf-9d47-7994405488d0.PNG)
